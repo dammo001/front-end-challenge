@@ -25,6 +25,7 @@ function domobj(){
       thishtml += self.products[i].htmlview;
       if ((i % 3 == 2) || i == (self.products.length-1) ){thishtml += "</div>";console.log("FINISH")}
     }
+
     $("#content").append(thishtml)
   }
   
@@ -33,22 +34,24 @@ function domobj(){
 function productobj(product, i){
   var self          = this;
   self.photo        = product.photos.medium_half
+  self.description  = product.description
   self.title        = product.name
   self.tagline      = product.tagline
   self.url          = product.url
   self.htmlview     = ""
   self.index        = i
-  self.custom_class = "col"+ ((i % 3) +1)
+  self.custom_class = "col"+ ((i % 3) +1) 
   
   self.updatehtml= function(){
     $.get('product-template.html', function(template){
-      self.htmlview = template.replace('{image}', self.photo).replace('{title}', self.title).replace('{tagline}', self.tagline).replace('{url}', self.url).replace('{custom_class}', self.custom_class);
+      console.log(self.description)
+      self.htmlview = template.replace('{image}', self.photo).replace('{title}', self.title).replace('{tagline}', self.tagline).replace('{url}', self.url).replace('{description}', self.description).replace('{custom_class}', self.custom_class);
     });
   }
 }
 
 
 var page=new domobj();
-page.getproducts('data.json');
+page.getproducts('./data.json');
 setTimeout("console.log('building html');page.updateproducthtml();",20);
-setTimeout("page.updatedom()",50)
+setTimeout("page.updatedom()",1000)
