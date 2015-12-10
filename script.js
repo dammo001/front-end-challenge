@@ -15,6 +15,7 @@ function domobj(){
     for( i=0; i< self.products.length ; i++){
       self.products[i].updatehtml();
     }
+    setTimeout(self.updatedom.bind(self),200)
   }
   
   self.updatedom = function(){
@@ -25,10 +26,15 @@ function domobj(){
       thishtml += self.products[i].htmlview;
       if ((i % 3 == 2) || i == (self.products.length-1) ){thishtml += "</div>";console.log("FINISH")}
     }
-
+    setTimeout(self.addxs.bind(self), 0); 
     $("#content").append(thishtml)
   }
-  
+
+  self.addxs = function(){
+    $(".x").click(function(){
+      $(this).parent().remove();
+    });
+  }
 }
 
 function productobj(product, i){
@@ -44,7 +50,6 @@ function productobj(product, i){
   
   self.updatehtml= function(){
     $.get('product-template.html', function(template){
-      console.log(self.description)
       self.htmlview = template.replace('{image}', self.photo).replace('{title}', self.title).replace('{tagline}', self.tagline).replace('{url}', self.url).replace('{description}', self.description).replace('{custom_class}', self.custom_class);
     });
   }
@@ -53,5 +58,7 @@ function productobj(product, i){
 
 var page=new domobj();
 page.getproducts('./data.json');
-setTimeout("console.log('building html');page.updateproducthtml();",20);
-setTimeout("page.updatedom()",1000)
+setTimeout(page.updateproducthtml.bind(page),20);
+
+
+
