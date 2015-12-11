@@ -8,12 +8,20 @@
     <link href="style.css" media="screen" rel="stylesheet">
   </head>
 <body>
+<div id="loading">
+	<img id="loading-image" src="loading_spinner.gif" /> 
+</div>
 
 <div id="body container">
   <h1 class="title">Welcome to Touch of Modern</h1>
   <div class="tagline">Live beyond expectations</div>
   <div id="content"></div>
 </div>
+	<script language="javascript" type="text/javascript">
+		$(window).load(function(){
+			$('#loading').hide();
+		});
+	</script> 
  <script src="script.js"></script>
 
 
